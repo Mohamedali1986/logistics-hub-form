@@ -8,7 +8,7 @@
 <style>
 :root{--navy:#16345a;--navy2:#1f4e79;--orange:#f26b21;--bg:#eef3f9;--text:#1c2b3d}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Cairo',sans-serif;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 45%,var(--bg) 45%);min-height:100vh;padding:24px 14px;color:var(--text)}
+html{background:var(--bg);overflow-x:hidden} body{font-family:'Cairo',sans-serif;background:linear-gradient(180deg,var(--navy) 0,var(--navy2) 280px,var(--bg) 280px) no-repeat;min-height:100vh;padding:24px 14px;color:var(--text);overflow-x:hidden;-webkit-text-size-adjust:100%}:'Cairo',sans-serif;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 45%,var(--bg) 45%);min-height:100vh;padding:24px 14px;color:var(--text)}
 .card{max-width:620px;margin:0 auto;background:#fff;border-radius:20px;box-shadow:0 12px 40px rgba(10,30,60,.25);overflow:hidden}
 .banner{display:block;width:100%;height:auto}
 .welcome{margin:20px 22px 6px;padding:16px 18px;background:#fff6f0;border-right:5px solid var(--orange);border-radius:12px;line-height:1.9;font-size:15px}
@@ -26,7 +26,7 @@ button:disabled{opacity:.6;cursor:wait}
 .msg{display:none;margin-top:16px;padding:14px;border-radius:10px;text-align:center;font-weight:700;line-height:1.8}
 .msg.ok{display:block;background:#e8f7ee;color:#1b7a43}
 .msg.err{display:block;background:#fdecec;color:#b42318}
-.hp{position:absolute;left:-9999px}
+.hp{position:absolute;width:0;height:0;opacity:0;overflow:hidden;pointer-events:none;border:0;padding:0}position:absolute;left:-9999px}
 </style>
 </head>
 <body>
