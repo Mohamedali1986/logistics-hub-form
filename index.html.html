@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logistics Hub | سجّل اهتمامك</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16345a;--navy2:#1f4e79;--orange:#f26b21;--bg:#eef3f9;--text:#1c2b3d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 45%,var(--bg) 45%);min-height:100vh;padding:24px 14px;color:var(--text)}
+.card{max-width:620px;margin:0 auto;background:#fff;border-radius:20px;box-shadow:0 12px 40px rgba(10,30,60,.25);overflow:hidden}
+.banner{display:block;width:100%;height:auto}
+.welcome{margin:20px 22px 6px;padding:16px 18px;background:#fff6f0;border-right:5px solid var(--orange);border-radius:12px;line-height:1.9;font-size:15px}
+.welcome b.t{display:block;color:var(--navy);font-size:16px;margin-bottom:4px}
+.welcome .gift{color:var(--orange);font-weight:700}
+form{padding:14px 22px 26px}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px;color:var(--navy)}
+label i{color:var(--orange);font-style:normal}
+input,select{width:100%;padding:12px 14px;border:1.5px solid #cfd9e6;border-radius:10px;font:inherit;font-size:15px;background:#fafcff;transition:.2s}
+input:focus,select:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(242,107,33,.15)}
+input[type=tel]{direction:ltr;text-align:right}
+button{width:100%;margin-top:22px;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--orange),#ff8a47);color:#fff;font:inherit;font-size:17px;font-weight:800;cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(242,107,33,.4)}
+button:disabled{opacity:.6;cursor:wait}
+.msg{display:none;margin-top:16px;padding:14px;border-radius:10px;text-align:center;font-weight:700;line-height:1.8}
+.msg.ok{display:block;background:#e8f7ee;color:#1b7a43}
+.msg.err{display:block;background:#fdecec;color:#b42318}
+.hp{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="card">
+  <img class="banner" src="banner.jpg" alt="Logistics Hub - المركز العربي لخبراء سلاسل الإمداد والشحن">
+
+  <div class="welcome">
+    <b class="t">طوّر مهاراتك في اللوجستيات واستعد لسوق العمل مع Logistics Hub!</b>
+    سجّل اهتمامك الآن لتحصل على <span class="gift">هدية مجانية فوراً: دليل مصطلحات الشحن البحري</span>،
+    واستفد من <span class="gift">خصم 70%</span> لفترة محدودة على كورس أساسيات اللوجستيات والشحن البحري.
+  </div>
+
+  <form id="f" novalidate>
+    <label>الاسم <i>*</i></label>
+    <input type="text" name="name" required placeholder="الاسم بالكامل">
+
+    <label>رقم الموبايل <i>*</i></label>
+    <input type="tel" name="mobile" required placeholder="01xxxxxxxxx" inputmode="tel">
+
+    <label>رقم الواتساب <i>*</i></label>
+    <input type="tel" name="whatsapp" required placeholder="01xxxxxxxxx" inputmode="tel">
+
+    <label>السن <i>*</i></label>
+    <input type="number" name="age" required min="15" max="80" placeholder="السن" inputmode="numeric">
+
+    <label>المؤهل <i>*</i></label>
+    <select name="qualification" required>
+      <option value="">اختر المؤهل</option>
+      <option>ثانوية عامة أو أقل</option>
+      <option>دبلوم</option>
+      <option>طالب جامعي</option>
+      <option>بكالوريوس / ليسانس</option>
+      <option>دراسات عليا</option>
+    </select>
+
+    <label>العمل الحالي <i>*</i></label>
+    <input type="text" name="job" required placeholder="مثال: محاسب / طالب / بدون عمل">
+
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+
+    <button type="submit" id="btn">سجّل اهتمامك الآن</button>
+    <div id="msg" class="msg"></div>
+  </form>
+</div>
+
+<script>
+// ضع رابط Web App هنا بعد نشر Apps Script
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1Fi-BVnuC1WWCeTJbiSByi3suhZNByaBmbvihqt641XiKHvb_d-bN0XRyJIa7U55j/exec";
+
+const f = document.getElementById('f'), btn = document.getElementById('btn'), msg = document.getElementById('msg');
+const show = (t, c) => { msg.className = 'msg ' + c; msg.textContent = t; };
+
+f.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (f.website.value) return; // honeypot
+  const phoneOk = v => /^\+?\d{8,15}$/.test(v.replace(/[\s-]/g, ''));
+  if (!f.checkValidity()) return show('من فضلك أكمل جميع البيانات المطلوبة', 'err');
+  if (!phoneOk(f.mobile.value) || !phoneOk(f.whatsapp.value)) return show('تأكد من صحة رقم الموبايل والواتساب', 'err');
+
+  btn.disabled = true; btn.textContent = 'جاري الإرسال...';
+  const data = new URLSearchParams({
+    name: f.name.value.trim(), mobile: f.mobile.value.trim(), whatsapp: f.whatsapp.value.trim(),
+    age: f.age.value, qualification: f.qualification.value, job: f.job.value.trim()
+  });
+  try {
+    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
+    f.reset();
+    show('✅ تم تسجيل اهتمامك بنجاح! سنتواصل معك على واتساب قريباً لإرسال دليل مصطلحات الشحن البحري وتفاصيل خصم 70%.', 'ok');
+  } catch (err) {
+    show('حدث خطأ أثناء الإرسال، حاول مرة أخرى', 'err');
+  }
+  btn.disabled = false; btn.textContent = 'سجّل اهتمامك الآن';
+});
+</script>
+</body>
+</html>
